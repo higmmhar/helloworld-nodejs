@@ -1,5 +1,10 @@
 pipeline {
-  agent { label 'nodejs-app' }
+  agent {
+    kubernetes {
+      label 'nodejs-app-pod-2'
+      yamlFile 'nodejs-pod.yaml'
+    }
+  }
   options { 
     buildDiscarder(logRotator(numToKeepStr: '2'))
     skipDefaultCheckout true
@@ -16,11 +21,11 @@ pipeline {
     }
     stage('Build and Push Image') {
       when {
-         beforeAgent true
-         branch 'master'
+        beforeAgent true
+        branch 'master'
       }
       steps {
-         echo "TODO - build and push image"
+        echo "TODO - build and push image"
       }
     }
   }
